@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), RecyclerListener {
     private lateinit var personViewModel: PersonViewModel
     private var mlist = emptyList<Person>()
     private lateinit var dialog: AlertDialog.Builder
+    private var id = 0
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,12 +30,21 @@ class MainActivity : AppCompatActivity(), RecyclerListener {
             val age = binding.personAge.text
             val country = binding.personCountry.text
             if (name.isNotEmpty() && age.isNotEmpty() && country.isNotEmpty()) {
-                personViewModel.addPerson(
-                    0,
-                    name.toString(),
-                    Integer.parseInt(age.toString()),
-                    country.toString()
-                )
+                if (binding.btnSubmit.text.toString() == "Update") {
+                    personViewModel.updatePerson(
+                        id, name.toString(),
+                        Integer.parseInt(age.toString()),
+                        country.toString()
+                    )
+                    binding.btnSubmit.text = "Submit"
+                } else {
+                    personViewModel.addPerson(
+                        0,
+                        name.toString(),
+                        Integer.parseInt(age.toString()),
+                        country.toString()
+                    )
+                }
                 age.clear()
                 name.clear()
                 country.clear()
@@ -56,7 +66,7 @@ class MainActivity : AppCompatActivity(), RecyclerListener {
         Toast.makeText(this, "$positon", Toast.LENGTH_SHORT).show()
         dialog.setTitle("Update or delete data")
             .setPositiveButton("Update") { dialog, _ ->
-                updatePerson(positon)
+                updatePerson(person)
                 dialog.dismiss()
             }
             .setNegativeButton("Delete") { dialog, _ ->
@@ -72,7 +82,13 @@ class MainActivity : AppCompatActivity(), RecyclerListener {
         Toast.makeText(this, "Person Deleted", Toast.LENGTH_SHORT).show()
     }
 
-    private fun updatePerson(positon: Int) {
+    private fun updatePerson(person: Person) {
+        binding.btnSubmit.text = "Update"
+        binding.personAge.setText(person.age.toString())
+        binding.personCountry.setText(person.country)
+        binding.personName.setText(person.name)
+        id = person.id
+        Toast.makeText(this, "Person updated", Toast.LENGTH_SHORT).show()
 
     }
 }

@@ -13,4 +13,7 @@ interface PersonDao {
 
     @Delete
     suspend fun deletePerson(person: Person)
+
+    @Update
+    suspend fun updatePerson(person: Person)
 }

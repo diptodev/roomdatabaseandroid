@@ -27,4 +27,11 @@ class PersonViewModel(application: Application) : AndroidViewModel(application) 
             repository.deletePerson(person)
         }
     }
+
+    fun updatePerson(id: Int, name: String, age: Int, country: String) {
+        val person = Person(id, name, age, country)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updatePerson(person)
+        }
+    }
 }
