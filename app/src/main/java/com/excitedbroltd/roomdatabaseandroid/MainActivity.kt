@@ -1,7 +1,7 @@
 package com.excitedbroltd.roomdatabaseandroid
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -11,10 +11,12 @@ import com.excitedbroltd.roomdatabaseandroid.adapter.RecyclerViewAdapter
 import com.excitedbroltd.roomdatabaseandroid.databinding.ActivityMainBinding
 import com.excitedbroltd.roomdatabaseandroid.myviemodel.PersonViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), RecyclerListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var personViewModel: PersonViewModel
     private var mlist = emptyList<Person>()
+
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -37,14 +39,17 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Fill all the field", Toast.LENGTH_SHORT).show()
             }
         }
-
+        val rv = RecyclerViewAdapter(this)
+        binding.rvView.layoutManager = LinearLayoutManager(this)
+        binding.rvView.adapter = rv
         personViewModel.getAllPerson().observe(this) {
-            mlist = it
-            val rv = RecyclerViewAdapter(mlist)
-            binding.rvView.layoutManager = LinearLayoutManager(this)
-            binding.rvView.adapter = rv
-            Log.d("DEMU", "onCreate: ${mlist.size}")
+            rv.setData(it)
+            rv.notifyDataSetChanged()
         }
 
+    }
+
+    override fun onClick(positon: Int) {
+        Toast.makeText(this, "$positon", Toast.LENGTH_SHORT).show()
     }
 }

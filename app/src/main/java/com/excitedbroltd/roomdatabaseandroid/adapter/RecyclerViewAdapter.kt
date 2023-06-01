@@ -4,13 +4,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.excitedbroltd.roomdatabaseandroid.Person
 import com.excitedbroltd.roomdatabaseandroid.R
+import com.excitedbroltd.roomdatabaseandroid.RecyclerListener
 
-class RecyclerViewAdapter(private val listItem: List<Person>) :
+class RecyclerViewAdapter(private val listener: RecyclerListener) :
     RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
+    private var listItem = emptyList<Person>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.listitem, parent, false)
         return MyViewHolder(view)
@@ -25,6 +28,9 @@ class RecyclerViewAdapter(private val listItem: List<Person>) :
         holder.name.text = person.name
         holder.age.text = person.age.toString()
         holder.country.text = person.country
+        holder.linearLayout.setOnClickListener {
+            listener.onClick(position)
+        }
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -32,6 +38,11 @@ class RecyclerViewAdapter(private val listItem: List<Person>) :
         val name = itemView.findViewById<TextView>(R.id.rv_name)
         val age = itemView.findViewById<TextView>(R.id.rv_age)
         val country = itemView.findViewById<TextView>(R.id.rv_country)
+        val linearLayout = itemView.findViewById<LinearLayout>(R.id.ll_listItem)
+    }
+
+    fun setData(listItem: List<Person>) {
+        this.listItem = listItem
     }
 }
 
