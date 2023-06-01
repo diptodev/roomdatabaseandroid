@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <data>
-
-        <variable
-            name="room"
-            type="com.excitedbroltd.roomdatabaseandroid.myviemodel.PersonViewModel" />
-    </data>
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -33,12 +26,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter the country name"
-            android:inputType="number" />
+
+            />
 
         <Button
+            android:id="@+id/btn_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{()->room.test()}"
             android:text="Submit" />
+
+        <Button
+            android:id="@+id/btn_get"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get" />
     </LinearLayout>
 </layout>

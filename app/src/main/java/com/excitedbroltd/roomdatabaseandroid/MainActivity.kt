@@ -1,6 +1,8 @@
 package com.excitedbroltd.roomdatabaseandroid
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +16,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         personViewModel = ViewModelProvider(this)[PersonViewModel::class.java]
-        binding.room = personViewModel
+        binding.btnSubmit.setOnClickListener {
+            val name = binding.personName.text
+            val age = binding.personAge.text
+            val country = binding.personCountry.text
+            if (name.isNotEmpty() && age.isNotEmpty() && country.isNotEmpty()) {
+                personViewModel.addPerson(
+                    0,
+                    name.toString(),
+                    Integer.parseInt(age.toString()),
+                    country.toString()
+                )
+                age.clear()
+                name.clear()
+                country.clear()
+            } else {
+                Toast.makeText(this, "Fill all the field", Toast.LENGTH_SHORT).show()
+            }
+        }
+        binding.btnGet.setOnClickListener {
+            Log.d("DEMU", "onCreate: ${personViewModel.getAllPerson().value}")
+        }
+        personViewModel.getAllPerson().observe(this) {
+            Log.d("DEMU", "onCreate: ${it[0]}")
+        }
     }
 }
