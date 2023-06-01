@@ -52,14 +52,27 @@ class MainActivity : AppCompatActivity(), RecyclerListener {
 
     }
 
-    override fun onClick(positon: Int) {
+    override fun onClick(person: Person,positon: Int) {
         Toast.makeText(this, "$positon", Toast.LENGTH_SHORT).show()
         dialog.setTitle("Update or delete data")
             .setPositiveButton("Update") { dialog, _ ->
-
-                dialog.dismiss() }
-            .setNegativeButton("Delete") { dialog, _ -> dialog.dismiss() }
+                updatePerson(positon)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Delete") { dialog, _ ->
+                deletePerson(person)
+                dialog.dismiss()
+            }
             .show()
             .setCancelable(true)
+    }
+
+    private fun deletePerson(person: Person) {
+
+        Toast.makeText(this, "${person.name}", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updatePerson(positon: Int) {
+
     }
 }

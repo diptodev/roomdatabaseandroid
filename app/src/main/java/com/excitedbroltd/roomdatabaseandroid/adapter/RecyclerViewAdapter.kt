@@ -29,7 +29,7 @@ class RecyclerViewAdapter(private val listener: RecyclerListener) :
         holder.age.text = person.age.toString()
         holder.country.text = person.country
         holder.linearLayout.setOnClickListener {
-            listener.onClick(position)
+            listener.onClick(person, position)
         }
     }
 
