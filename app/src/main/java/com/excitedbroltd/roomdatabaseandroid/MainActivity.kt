@@ -3,6 +3,7 @@ package com.excitedbroltd.roomdatabaseandroid
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -15,12 +16,14 @@ class MainActivity : AppCompatActivity(), RecyclerListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var personViewModel: PersonViewModel
     private var mlist = emptyList<Person>()
+    private lateinit var dialog: AlertDialog.Builder
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         personViewModel = ViewModelProvider(this)[PersonViewModel::class.java]
+        dialog = AlertDialog.Builder(this)
         binding.btnSubmit.setOnClickListener {
             val name = binding.personName.text
             val age = binding.personAge.text
@@ -51,5 +54,12 @@ class MainActivity : AppCompatActivity(), RecyclerListener {
 
     override fun onClick(positon: Int) {
         Toast.makeText(this, "$positon", Toast.LENGTH_SHORT).show()
+        dialog.setTitle("Update or delete data")
+            .setPositiveButton("Update") { dialog, _ ->
+
+                dialog.dismiss() }
+            .setNegativeButton("Delete") { dialog, _ -> dialog.dismiss() }
+            .show()
+            .setCancelable(true)
     }
 }
