@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), RecyclerListener {
 
     }
 
-    override fun onClick(person: Person,positon: Int) {
+    override fun onClick(person: Person, positon: Int) {
         Toast.makeText(this, "$positon", Toast.LENGTH_SHORT).show()
         dialog.setTitle("Update or delete data")
             .setPositiveButton("Update") { dialog, _ ->
@@ -68,8 +68,8 @@ class MainActivity : AppCompatActivity(), RecyclerListener {
     }
 
     private fun deletePerson(person: Person) {
-
-        Toast.makeText(this, "${person.name}", Toast.LENGTH_SHORT).show()
+        personViewModel.deletePerson(person)
+        Toast.makeText(this, "Person Deleted", Toast.LENGTH_SHORT).show()
     }
 
     private fun updatePerson(positon: Int) {

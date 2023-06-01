@@ -6,8 +6,11 @@ import com.excitedbroltd.roomdatabaseandroid.PersonDao
 
 class Repository(private val personDao: PersonDao) {
     fun getAllData(): LiveData<List<Person>> = personDao.readAllPerson()
-    suspend fun addUser(person: Person) {
-        personDao.addUser(person)
+    suspend fun addPerson(person: Person) {
+        personDao.addPerson(person)
     }
 
+    suspend fun deletePerson(person: Person) {
+        personDao.deletePerson(person)
+    }
 }

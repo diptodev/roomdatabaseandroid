@@ -24,7 +24,7 @@ class RecyclerViewAdapter(private val listener: RecyclerListener) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         Log.d("DEMU", "onBindViewHolder: ${listItem.size}")
         val person = listItem[position]
-        holder.id.text = person.id.toString()
+        holder.id.text = (1+position).toString()
         holder.name.text = person.name
         holder.age.text = person.age.toString()
         holder.country.text = person.country

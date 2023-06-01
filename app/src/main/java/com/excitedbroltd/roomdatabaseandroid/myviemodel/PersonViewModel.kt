@@ -18,7 +18,13 @@ class PersonViewModel(application: Application) : AndroidViewModel(application) 
     fun addPerson(id: Int, name: String, age: Int, country: String) {
         val person = Person(id, name, age, country)
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addUser(person)
+            repository.addPerson(person)
+        }
+    }
+
+    fun deletePerson(person: Person) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deletePerson(person)
         }
     }
 }
